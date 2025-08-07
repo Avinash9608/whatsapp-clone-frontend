@@ -158,8 +158,9 @@ export const ChatProvider = ({ children }) => {
 
   // Initialize Socket.IO connection and set up event listeners
   useEffect(() => {
-    // Initialize socket connection
-    socketRef.current = io('http://localhost:5000');
+    // Initialize socket connection using environment variable or fallback to localhost
+    const socketUrl = import.meta.env.VITE_SOCKET_URL || 'http://localhost:5000';
+    socketRef.current = io(socketUrl);
     
     // Listen for new messages
     socketRef.current.on('new_message', (newMessage) => {
